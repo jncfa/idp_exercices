@@ -1,0 +1,2 @@
+project(IDP_Class1_Exercise01)
+add_executable(exercise01 exercise01.cc)
