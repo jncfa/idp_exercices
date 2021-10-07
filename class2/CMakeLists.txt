@@ -1,2 +1,3 @@
+#E para isto que serve o CMake a IDP?!?!?!?!?!??!?!?!?!?!
 add_subdirectory(B2a)
 add_subdirectory(tpc)
