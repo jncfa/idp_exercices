@@ -1,12 +1,15 @@
 
 #include "DetectorConstruction.hh"
-#include "PhysicsList.hh"
-//#include "Shielding.hh"
-//#include "QGSP_BERT_HP.hh"
+//#include "PhysicsList.hh"
+#include "QGSP_BIC_HP.hh"
 #include "PrimaryGeneratorAction.hh"
 #include "SteppingAction.hh"
-
+#ifdef G4MULTITHREADED  
+#include "G4MTRunManager.hh"
+#else
 #include "G4RunManager.hh"
+#endif
+
 #include "G4UImanager.hh"
 
 #ifdef G4VIS_USE
@@ -23,16 +26,20 @@ int main(int argc,char** argv)
 {
   // Run manager
   //
-  G4RunManager * runManager = new G4RunManager;
-
+#ifdef G4MULTITHREADED  
+  G4MTRunManager* runManager = new G4MTRunManager;
+#else
+  G4RunManager* runManager = new G4RunManager;
+#endif
   // User Initialization classes (mandatory)
   //
   DetectorConstruction* detector = new DetectorConstruction;
   runManager->SetUserInitialization(detector);
   //
-  G4VUserPhysicsList* physics = new PhysicsList;
-  //Shielding *physics = new Shielding();
-  //QGSP_BERT_HP *physics = new QGSP_BERT_HP();
+  //G4VUserPhysicsList* physics = new PhysicsList;
+  // Using QGSP_BIC_HP Reference Physics List
+  // Recomended for radiation protection, shielding and medical applications
+  G4VUserPhysicsList* physics = new QGSP_BIC_HP;
   runManager->SetUserInitialization(physics);
    
   // User Action classes
@@ -48,6 +55,8 @@ int main(int argc,char** argv)
   runManager->Initialize();
       
 #ifdef G4VIS_USE
+  printf("here\n");
+
   G4VisManager* visManager = new G4VisExecutive;
   visManager->Initialize();
 #endif    
@@ -56,6 +65,8 @@ int main(int argc,char** argv)
   //
   G4UImanager * UImanager = G4UImanager::GetUIpointer();  
 
+  printf("more here\n");
+  
   if (argc!=1)   // batch mode  
     {
       G4String command = "/control/execute ";
@@ -67,6 +78,8 @@ int main(int argc,char** argv)
 #ifdef G4UI_USE
       G4UIExecutive * ui = new G4UIExecutive(argc,argv);
 #ifdef G4VIS_USE
+    printf("vis here\n");
+  
       UImanager->ApplyCommand("/control/execute vis.mac");     
 #endif
       ui->SessionStart();
@@ -82,6 +95,8 @@ int main(int argc,char** argv)
   //                 owned and deleted by the run manager, so they should not
   //                 be deleted in the main() program !
 
+  printf("bye\n");
+  
   delete runManager;
 
   return 0;

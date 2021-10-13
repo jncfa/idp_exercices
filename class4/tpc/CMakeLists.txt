@@ -2,7 +2,7 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 3.0)
-project(IDP_Class3_TPCs)
+project(IDP_Class4_TPCs)
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -33,21 +33,20 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(class3tpc class3tpc.cc ${sources} ${headers})
-target_link_libraries(class3tpc ${Geant4_LIBRARIES})
+add_executable(class4tpc class4tpc.cc ${sources} ${headers})
+target_link_libraries(class4tpc ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build B2a. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-set(IDP_Class3_TPCs_SCRIPTS
-  gui.mac
-  run1.mac
+set(IDP_Class4_TPCs_SCRIPTS
+  batch.mac
   vis.mac
   )
 
-foreach(_script ${IDP_Class3_TPCs_SCRIPTS})
+foreach(_script ${IDP_Class4_TPCs_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
@@ -58,4 +57,4 @@ endforeach()
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS exampleB2a DESTINATION bin)
+install(TARGETS class4tpc DESTINATION bin)

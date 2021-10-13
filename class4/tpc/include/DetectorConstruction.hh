@@ -22,9 +22,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
   public:
   
      G4VPhysicalVolume* Construct();
-
-  private:
-     G4UserLimits* stepLimit;
      
 };
 
