@@ -82,7 +82,8 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
     G4double fWorldLength = 10.0 * m;
     G4double HalfWorldLength = 0.5 * fWorldLength;
 
-    G4double fTargetThickness = 2.87 * cm;
+    G4double fTargetThickness = 2.89 * cm;
+    G4double fDetectorThickness = 0.01 * cm;
 
     G4Box *solidWorld =
         new G4Box("world", HalfWorldLength, HalfWorldLength, HalfWorldLength);
@@ -94,14 +95,14 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
     G4VPhysicalVolume *physiWorld =
         new G4PVPlacement(nullptr,               // no rotation
                           G4ThreeVector(), // at (0,0,0)
-                          "World",         // its name
                           logicWorld,      // its logical volume
+                          "World",         // its name
                           nullptr,         // its mother  volume
                           false,           // no boolean operations
                           0);              // copy number
 
     G4Box *solidTarget =
-        new G4Box("target", fTargetThickness, HalfWorldLength, HalfWorldLength);
+        new G4Box("target", 0.5*fTargetThickness, HalfWorldLength, HalfWorldLength);
 
     G4LogicalVolume *logicTarget =
         new G4LogicalVolume(solidTarget, Lead, "Target", 0, 0, 0);
@@ -109,15 +110,15 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
     //  Must place the Target Physical volume unrotated at (halfWorldLength,0,0) in relation to the world Physical Volume.
     G4VPhysicalVolume *physiTarget =
         new G4PVPlacement(nullptr, // no rotation
-                          G4ThreeVector(HalfWorldLength, 0, 0),
-                          "Target",    // its name
+                          G4ThreeVector(fTargetThickness/2),
                           logicTarget, // its logical volume
-                          physiWorld,  // its mother  volume
+                          "Target",    // its name
+                          logicWorld,  // its mother  volume
                           false,       // no boolean operations
                           0);          // copy number
 
     G4Box *solidDetector =
-        new G4Box("detector", 0.1 * fWorldLength, HalfWorldLength, HalfWorldLength);
+        new G4Box("detector", 0.5*fDetectorThickness, HalfWorldLength, HalfWorldLength);
 
     G4LogicalVolume *logicDetector =
         new G4LogicalVolume(solidDetector, Vacuum, "Detector", 0, 0, 0);
@@ -125,10 +126,10 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
     //  Must place the Target Physical volume unrotated at (halfWorldLength + targetThickness,0,0) in relation to the world Physical Volume.
     G4VPhysicalVolume *physiDetector =
         new G4PVPlacement(nullptr, // no rotation
-                          G4ThreeVector(HalfWorldLength + fTargetThickness, 0, 0),
-                          "Detector",    // its name
+                          G4ThreeVector(1*fTargetThickness+0.5*fDetectorThickness, 0, 0),
                           logicDetector, // its logical volume
-                          physiWorld,  // its mother  volume
+                          "Detector",    // its name
+                          logicWorld,  // its mother  volume
                           false,       // no boolean operations
                           0);
 

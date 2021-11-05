@@ -32,16 +32,14 @@ void SteppingAction::UserSteppingAction(const G4Step *thisStep)
     if (theVolume->GetName() == "Detector")
     {
         // Only check primary particles
-        if (thisParticle->GetParticleName() == "alpha")
+        if (thisParticle->GetParticleName() == "gamma")
         {
             bout << position.x() / cm << "\t"
                  << position.y() / cm << "\t"
                  << position.z() / cm << "\t"
                  << kinEner / MeV << G4endl;
         }
-
-        // Kill track if it reached the detector
-        thisTrack->SetTrackStatus(G4TrackStatus::fStopAndKill);
+        thisTrack->SetTrackStatus(G4TrackStatus::fKillTrackAndSecondaries);
     }
 }
 

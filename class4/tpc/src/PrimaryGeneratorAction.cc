@@ -20,12 +20,12 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(
   particleGun = new G4ParticleGun(n_particle);
 
   G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
-  G4ParticleDefinition *particle = particleTable->FindParticle("alpha");
+  G4ParticleDefinition *particle = particleTable->FindParticle("gamma");
 
   particleGun->SetParticleDefinition(particle);
   particleGun->SetParticleMomentumDirection(G4ThreeVector(1., 0., 0.));
   particleGun->SetParticleEnergy(1.0 * MeV);
-  particleGun->SetParticlePosition(G4ThreeVector(0. * cm, 0. * cm, 0. * cm));
+  particleGun->SetParticlePosition(G4ThreeVector(-1*m, 0. * cm, 0. * cm));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
