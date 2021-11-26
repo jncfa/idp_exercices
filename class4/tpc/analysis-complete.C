@@ -12,6 +12,6 @@
 	//test->Draw("atan(sqrt(z**2+y**2)/x)","kinE==1000","same");
 	//test->SetFillColor(0);
 	//test->SetLineColor(kRed); test->SetLineWidth(3);
-	test->Draw("atan(sqrt(z**2+y**2)/x)","kinE==1000.","same");
+	test->Draw("kinE:atan(sqrt(z**2+y**2)/x)","kinE==1000.","prof");
 	//test->GetXaxis()->SetTitle("Scattering angle (rad)");
 }

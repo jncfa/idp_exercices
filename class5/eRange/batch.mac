@@ -1,0 +1,13 @@
+# can be run in batch, without graphic
+# or interactively: Idle> /control/execute batch.mac
+#
+#/run/verbose 1
+#/event/verbose 1
+#/tracking/verbose 1
+#
+# Increase cut to get rid of secondary electrons
+#/run/setCut 1 cm
+#
+# Create primary particles
+/run/beamOn 100000
+# 
